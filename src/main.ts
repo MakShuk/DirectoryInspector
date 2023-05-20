@@ -1,4 +1,4 @@
-import { ChokidarService } from './chokidar/chokidar.service';
+import { ChokidarService } from './services/chokidar/chokidar.service';
 
 const path = 'C:Users/maksh/Downloads';
 const path2 = 'C:/Users/maksh/OneDrive/Рабочий стол';
