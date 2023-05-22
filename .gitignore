@@ -5,6 +5,7 @@ build/
 coverage/
 config/
 voices/
+txt/
 
 # Environment files
 .env
@@ -19,6 +20,7 @@ yarn.lock
 
 # Editor files
 .idea/
+*.drawio
 
 # OS-generated files
 .DS_Store
