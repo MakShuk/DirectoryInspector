@@ -8,12 +8,13 @@ export class FolderService {
 		this.isExists();
 	}
 
-	async getFileCount(): Promise<number | undefined> {
+	async getFileCount(): Promise<number> {
 		try {
 			const files = await fs.readdir(this.path);
-			return files.length;
+			return files.length || 0;
 		} catch (err) {
 			console.error(err);
+			return 0;
 		}
 	}
 

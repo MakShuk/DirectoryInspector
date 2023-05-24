@@ -9,7 +9,7 @@ export class FileService {
 		this.path = resolve(__dirname, catalog, `${fileName}`);
 	}
 
-	async writeJsonFile(data: WriteData): Promise<void> {
+	async writeJsonFile(data: any): Promise<void> {
 		try {
 			const dataJson = JSON.stringify(data);
 			await fs.writeFile(this.path, dataJson);

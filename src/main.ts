@@ -3,29 +3,33 @@ import { FileService } from './services/file/fileService';
 import { FolderService } from './services/folder/folderService';
 import { l } from './services/logger/logger.service';
 
-const pathSaveLogFolder = 'E:/log';
-const pathAppDataFolder = 'C:/Users/maksh/AppData/Local';
-const pathDocumentFolder = 'C:/Users/maksh/OneDrive/Documents';
+const settings = new FileService('setting.json', './../../../settings');
 
-function generateFilename(): string {
+const generateFilename = (counter: number): string => {
 	const date = new Date();
-	const randomNum = Math.floor(Math.random() * 1000);
-	const filename = `${date.toISOString().slice(0, 10)}-${randomNum}.txt`;
+	const filename = `${date.toISOString().slice(0, 10)}-${counter + 1}.txt`;
 	return filename;
-}
+};
+
+const init = async (
+	watchFolder: string,
+	saveFolderPath: string,
+	counter: number,
+): Promise<void> => {
+	const watcherFolder = new FolderService(watchFolder);
+	const saveLogFile = new FileService(generateFilename(counter), saveFolderPath);
+	const watcher = new ChokidarService(watcherFolder.path, saveLogFile);
+	watcher.watchAll();
+};
 
 const start = async (): Promise<void> => {
-	const saveLogFolder = new FolderService(pathSaveLogFolder);
-	const appDataFolder = new FolderService(pathAppDataFolder);
-	const documentFolder = new FolderService(pathDocumentFolder);
-
-	const saveLogFile = new FileService(generateFilename(), saveLogFolder.path);
-
-	const watcherDataFolder = new ChokidarService(appDataFolder.path, saveLogFile);
-	const watcherDocumentFolder = new ChokidarService(documentFolder.path, saveLogFile);
-
-	watcherDataFolder.watchAll();
-	watcherDocumentFolder.watchAll();
+	const path = await settings.readJsonFile();
+	const saveLogFolder = new FolderService(path.saveFolder);
+	const counter = await saveLogFolder.getFileCount();
+	l.warn(path.watch);
+	path.watch.forEach((path: string) => {
+		init(path, saveLogFolder.path, counter);
+	});
 };
 
 start();
