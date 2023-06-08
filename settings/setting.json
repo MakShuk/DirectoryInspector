@@ -1,1 +1,5 @@
-{"saveFolder":"E:/log","watch":["C:/Users/maksh/AppData/Local","C:/Users/maksh/OneDrive/Documents"]}
+{
+	"saveFolder": "E:/log",
+	"watch": ["C:/Users/maksh/AppData/Local", "C:/Users/maksh/OneDrive/Documents"],
+	"regexp": "/(.log|.txt|.tmp|.db)$/i"
+}

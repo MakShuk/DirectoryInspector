@@ -2,6 +2,8 @@ import chokidar from 'chokidar';
 import { FileService } from '../file/fileService';
 import { l } from '../logger/logger.service';
 
+const reg = new RegExp('/(.log|.txt|.tmp|.db)$/i');
+
 export class ChokidarService {
 	private watcher: chokidar.FSWatcher;
 	constructor(private pathWatchFolder: string, private saveDateFile: FileService) {
@@ -12,7 +14,7 @@ export class ChokidarService {
 		this.watcher = chokidar.watch(this.pathWatchFolder, {
 			persistent: true,
 
-			ignored: /(\.log|\.txt|\.tmp|\.db)$/i,
+			ignored: reg,
 			ignoreInitial: true,
 			followSymlinks: true,
 			cwd: '.',

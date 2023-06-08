@@ -5,7 +5,6 @@ export class FolderService {
 	path: string;
 	constructor(catalog: string) {
 		this.path = resolve(__dirname, catalog, ``);
-		this.isExists();
 	}
 
 	async getFileCount(): Promise<number> {
